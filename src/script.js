@@ -1,38 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadCarsBtn = document.getElementById('loadCarsBtn');
     const carList = document.getElementById('carList');
-    //let cars = []; // Declare cars variable
-
 
     loadCarsBtn.addEventListener('click', () => {
-        fetch('./api/cars') // Changed URL to point to Azure API Function
-            .then(response => response.json())
-            .then(data => {
-              //  cars = data;
-                carList.innerHTML = '';
-                data.forEach((car, index) => {
-                    const carCard = document.createElement('div');
-                    carCard.classList.add('car-card');
-                    carCard.innerHTML = `
-                        <h2>${car.make} ${car.model}</h2>
-                        <p><strong>Year:</strong> ${car.year}</p>
-                        <p><strong>Make:</strong> ${car.make}</p>
-                        <p><strong>Model:</strong> ${car.model}</p>
-                        <p><strong>Price:</strong> R${car.price}</p>
-                        <button class="btn btn-remove" data-index="${index}">Remove</button>
-                    `;
-                    carList.appendChild(carCard);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching car data:', error);
-            });
+        fetchCars(); // Fetch and display cars when the "Load Cars" button is clicked
     });
 });
 
+// Function to fetch cars from the API and display them
+function fetchCars() {
+    fetch('./api/cars')
+        .then(response => response.json())
+        .then(data => {
+            const carList = document.getElementById('carList');
+            carList.innerHTML = ''; // Clear previous car list
+
+            data.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.classList.add('car-card');
+                carCard.innerHTML = `
+                    <h2>${car.make} ${car.model}</h2>
+                    <p><strong>Year:</strong> ${car.year}</p>
+                    <p><strong>Make:</strong> ${car.make}</p>
+                    <p><strong>Model:</strong> ${car.model}</p>
+                    <p><strong>Price:</strong> R${car.price}</p>
+                `;
+                carList.appendChild(carCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching car data:', error);
+        });
+}
+
 // Function to add a new car
 function addCar(newCar) {
-    fetch('./api/cars', { // Changed URL to point to Azure API Function
+    fetch('./api/cars', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -42,9 +45,7 @@ function addCar(newCar) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            // Reload cars
-            const loadCarsBtn = document.getElementById('loadCarsBtn');
-            loadCarsBtn.click();
+            fetchCars(); // Reload cars after adding a new car
         })
         .catch(error => {
             console.error('Error:', error);
@@ -61,30 +62,4 @@ carForm.addEventListener('submit', event => {
     const price = document.getElementById('price').value;
     addCar({ make, model, year, price });
     carForm.reset();
-});
-
-// Function to remove a car
-function removeCar(index) {
-    const carId = cars[index].id;
-    fetch(`./api/cars/${carId}`, { // Changed URL to point to Azure API Function
-        method: 'DELETE'
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            // Reload cars
-            const loadCarsBtn = document.getElementById('loadCarsBtn').textContent =text  ;
-            loadCarsBtn.click();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-// Event delegation for remove buttons
-document.addEventListener('click', event => {
-    if (event.target.classList.contains('btn-remove')) {
-        const index = event.target.dataset.index;
-        removeCar(index);
-    }
 });
