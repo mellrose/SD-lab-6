@@ -1,12 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadCarsBtn = document.getElementById('loadCarsBtn');
     const carList = document.getElementById('carList');
-    let cars = []; // Declare cars variable
+    //let cars = []; // Declare cars variable
+
+
     loadCarsBtn.addEventListener('click', () => {
         fetch('./api/cars') // Changed URL to point to Azure API Function
             .then(response => response.json())
             .then(data => {
-                cars = data;
+              //  cars = data;
                 carList.innerHTML = '';
                 data.forEach((car, index) => {
                     const carCard = document.createElement('div');
@@ -71,7 +73,7 @@ function removeCar(index) {
         .then(data => {
             console.log('Success:', data);
             // Reload cars
-            const loadCarsBtn = document.getElementById('loadCarsBtn');
+            const loadCarsBtn = document.getElementById('loadCarsBtn').textContent =text  ;
             loadCarsBtn.click();
         })
         .catch(error => {
