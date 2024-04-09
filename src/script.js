@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to fetch cars from the API and display them
 function fetchCars() {
-    fetch('./api/cars')
+    fetch('/api/cars')
         .then(response => response.json())
         .then(data => {
             const carList = document.getElementById('carList');
@@ -35,7 +35,7 @@ function fetchCars() {
 
 // Function to add a new car
 function addCar(newCar) {
-    fetch('./api/cars', {
+    fetch('/api/cars', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
