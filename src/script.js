@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const carList = document.getElementById('carList');
     let cars = []; // Declare cars variable
     loadCarsBtn.addEventListener('click', () => {
-        fetch('/api/cars') // Changed URL to point to Azure API Function
+        fetch('./api/cars') // Changed URL to point to Azure API Function
             .then(response => response.json())
             .then(data => {
                 cars = data;
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to add a new car
 function addCar(newCar) {
-    fetch('/api/cars', { // Changed URL to point to Azure API Function
+    fetch('./api/cars', { // Changed URL to point to Azure API Function
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ carForm.addEventListener('submit', event => {
 // Function to remove a car
 function removeCar(index) {
     const carId = cars[index].id;
-    fetch(`/api/cars/${carId}`, { // Changed URL to point to Azure API Function
+    fetch(`./api/cars/${carId}`, { // Changed URL to point to Azure API Function
         method: 'DELETE'
     })
         .then(response => response.json())
