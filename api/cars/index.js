@@ -67,7 +67,7 @@ module.exports = async function (context, req) {
     }
 
     // Handle POST request for /cars
-    else if (req.method === 'POST' && req.url === '/api/cars') {
+    else if (req.method === 'POST' && req.url === './api/cars') {
         const newCar = req.body;
         cars.push(newCar);
         context.res = {
