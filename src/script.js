@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loadCarsBtn = document.getElementById('loadCarsBtn');
     const carList = document.getElementById('carList');
-    cars = [];
+    let cars = []; // Declare cars variable
     loadCarsBtn.addEventListener('click', () => {
-        fetch('http://localhost:3001/cars')
+        fetch('/api/cars') // Changed URL to point to Azure API Function
             .then(response => response.json())
             .then(data => {
                 cars = data;
@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 });
+
+// Function to add a new car
 function addCar(newCar) {
-    fetch('http://localhost:3001/cars', {
+    fetch('/api/cars', { // Changed URL to point to Azure API Function
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -38,14 +40,16 @@ function addCar(newCar) {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            //reload cars
-            // const loadCarsBtn = document.getElementById('loadCarsBtn');
+            // Reload cars
+            const loadCarsBtn = document.getElementById('loadCarsBtn');
             loadCarsBtn.click();
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
+const carForm = document.getElementById('carForm');
 
 carForm.addEventListener('submit', event => {
     event.preventDefault();
@@ -60,22 +64,23 @@ carForm.addEventListener('submit', event => {
 // Function to remove a car
 function removeCar(index) {
     const carId = cars[index].id;
-    fetch(`http://localhost:3001/cars/${carId}`, {
+    fetch(`/api/cars/${carId}`, { // Changed URL to point to Azure API Function
         method: 'DELETE'
     })
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            //reload cars
-            // const loadCarsBtn = document.getElementById('loadCarsBtn');
+            // Reload cars
+            const loadCarsBtn = document.getElementById('loadCarsBtn');
             loadCarsBtn.click();
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
 // Event delegation for remove buttons
-carList.addEventListener('click', event => {
+document.addEventListener('click', event => {
     if (event.target.classList.contains('btn-remove')) {
         const index = event.target.dataset.index;
         removeCar(index);
