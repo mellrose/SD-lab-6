@@ -13,7 +13,7 @@ module.exports = async function (context, req) {
     }
 
     // Handle GET request for /cars/:id
-    else if (req.method === 'GET' && req.url.startsWith('./api/cars/${carId}')) {
+    else if (req.method === 'GET' && req.url.startsWith('./api/cars/:id')) {
         const id = req.url.substring(6); // Extract ID from URL
         const car = cars.find(car => car.id === id);
         if (car) {
