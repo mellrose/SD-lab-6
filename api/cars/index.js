@@ -4,6 +4,9 @@ module.exports = async function (context, req) {
     // Import cars data
     const cars = require('/src/cars.json');
 
+    var cors = require("cors")
+    app.use(cors())
+
     // Handle GET request for /cars
     if (req.method === 'GET' && req.url === './api/cars') {
         context.res = {
