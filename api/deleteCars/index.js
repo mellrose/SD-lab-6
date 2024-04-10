@@ -2,11 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = async function (context, req) {
-    context.log('Deleting car by ID.');
+    //context.log('Deleting car by ID.');
 
-    if (req.method === 'DELETE' && req.url.startsWith(`/api/getCars/${id}`)) {
+    if (req.method === 'delete') {
 
-        const id = req.url.substring(10); // Extract ID from URL
+        //const id = req.url.substring(10); // Extract ID from URL
+        const id= req.params.carId
 
         // Import cars data
         const carsFilePath = path.resolve(__dirname, '../shared/cars.json');
@@ -19,9 +20,13 @@ module.exports = async function (context, req) {
             // Write updated data back to the JSON file
             fs.writeFileSync(carsFilePath, JSON.stringify(cars, null, 2));
 
+            // context.res = {
+            //     status: 200,
+            //     body: { message: `Car with id ${id} deleted` }
+            // };
+
             context.res = {
-                status: 200,
-                body: { message: `Car with id ${id} deleted` }
+                body: cars
             };
         } else {
             context.res = {
