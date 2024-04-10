@@ -52,7 +52,7 @@ module.exports = async function (context, req) {
     }
 
     // Handle DELETE request for /cars/:id
-    else if (req.method === 'DELETE' && req.url.startsWith('./api/cars/')) {
+    else if (req.method === 'DELETE' && req.url.startsWith('/api/cars/{id}')) {
         const id = req.url.substring(10); // Extract ID from URL
         const index = cars.findIndex(car => car.id === id);
         if (index !== -1) {
