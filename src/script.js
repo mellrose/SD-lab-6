@@ -60,20 +60,20 @@ carForm.addEventListener('submit', event => {
 // Function to remove a car
 function removeCar(index) {
     const carId = cars[index].id;
-    fetch('/api/deleteCars', {
+    fetch(`/api/getCars/${carId}`, {
         method: 'DELETE'
     })
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
             //reload cars
-            // const loadCarsBtn = document.getElementById('loadCarsBtn');
             loadCarsBtn.click();
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }
+
 // Event delegation for remove buttons
 carList.addEventListener('click', event => {
     if (event.target.classList.contains('btn-remove')) {

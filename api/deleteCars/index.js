@@ -4,7 +4,8 @@ const path = require('path');
 module.exports = async function (context, req) {
     context.log('Deleting car by ID.');
 
-    if (req.method === 'DELETE' && req.url.startsWith('/api/getCars/${id}')) {
+    if (req.method === 'DELETE' && req.url.startsWith(`/api/getCars/${id}`)) {
+
         const id = req.url.substring(10); // Extract ID from URL
 
         // Import cars data
